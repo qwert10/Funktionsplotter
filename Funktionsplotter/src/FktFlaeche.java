@@ -21,7 +21,8 @@ public class FktFlaeche extends JPanel {
 		g.drawLine(0,super.getHeight()/2, super.getWidth(), super.getHeight()/2); // X-Achse
 		g.drawLine(super.getWidth()/2,0, super.getWidth()/2, super.getHeight()); // Y-Achse
 		
-		for(int i=0;i<10;i++)
+		for(int i=0
+				;i<10;i++)
 		{
 			g.drawLine(i*(super.getWidth()/10), (super.getHeight()/2)-10,i*(super.getWidth()/10),(super.getHeight()/2)+10);
 		}
