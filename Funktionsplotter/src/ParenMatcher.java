@@ -1,4 +1,3 @@
-import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -14,7 +13,7 @@ public class ParenMatcher{
     }
   }
   	
-  public void parenMatch(){
+  public boolean parenMatch(){
     
     int n=inputString.length();
     Stack parenStack=new Stack(n);
@@ -28,17 +27,14 @@ public class ParenMatcher{
 
       }else if(d==')'||d==']'||d=='}'){
         if(parenStack.empty()){
-        	output("Falsch");
-        	return;
-            //Stack leer, was nun?
+        	return false;
+            //Stack leer
 
         }else{
           c=((Character)parenStack.pop()).charValue();
           if(!match(c,d)){
             //keine übereinstimmung von d und dem top vom Stack
-        	  output("Falsch");
-        	  return;
-            //hier ergänzen
+        	  return false;
 
           }
         }
@@ -47,8 +43,7 @@ public class ParenMatcher{
     }
     if(parenStack.empty()){
     	
-    		output("Richtig");
-    		return;
+    		return true;
 
     }else{
    
@@ -61,20 +56,15 @@ public class ParenMatcher{
     			;
     		else
     			{
-    			
-    			output("Falsch");
-    			return;
+    			return false;
     					}
     		
     	}
-   	  output("Falsch");
+   	  return false;
 
     }
   }
-  	
-  private void output(String s){
-    outputString=s;
-  }
+
   	
   public void setInput(String input){
     inputString=input;
