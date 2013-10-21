@@ -146,6 +146,7 @@ public class FktBerechnungen {
 			if (Character.isDigit(aktuell))
 			{	
 				aktuellePos=findeZahl(liste,funktion,aktuellePos,aktuell);
+				continue;
 			}
 			if(aktuell=='(')
 			{
@@ -162,6 +163,10 @@ public class FktBerechnungen {
 				{
 					int tokenLaenge;
 					tokenLaenge=erkenneToken(map,aktuellePos,funktion,liste);
+					if (tokenLaenge!=0)
+					{
+						aktuellePos=aktuellePos+tokenLaenge;
+					}
 					
 				}
 			}
@@ -170,7 +175,7 @@ public class FktBerechnungen {
 		return liste;
 	}
 	
-	// TODO Prüfung der Funktion! 
+	// TODO Prüfung Gleitkommazahlen
 	public int findeZahl(List<Token> liste ,String funktion,int aktuellePos,char aktuell)
 	{
 		
@@ -180,7 +185,7 @@ public class FktBerechnungen {
 		while(nachfolger<funktion.length())
 		{
 			char nachfolgeChar=funktion.charAt(nachfolger);
-			if (Character.isDigit(nachfolger))
+			if (Character.isDigit(nachfolgeChar))
 			{
 				nachfolger++;
 			}
@@ -193,6 +198,7 @@ public class FktBerechnungen {
 			{
 				break;
 			}
+		}
 			
 			try
 			{
@@ -205,9 +211,10 @@ public class FktBerechnungen {
 				System.out.println("Es ist eine Parse Exeption aufgetreten");
 			}
 			
-		}
+		
 		return nachfolger;
 	}
+	
 	
 	public int erkenneToken(Map<String, ? extends Token> m,int aktuellePos, String funktion, List<Token> liste)
 	{
