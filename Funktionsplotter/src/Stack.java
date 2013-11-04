@@ -49,27 +49,21 @@ public class Stack {
 		Stapel[j]=null;
 		return puffer;	
 	}
-	/*
-	public static void main (String args[])
+	public Object readStack()
 	{
+		if (empty())
+		return null;
 		
-		Stack s1= new Stack(10);
-		int eins =1;
-		int zwei =2;
-		double drei =3;
-		double vier=4;
+		int j=0;
+		for (j=0;j<=Stapel.length;j++)
+		{
+		 if (Stapel[j]==null)
+			 break;
+			
+		}
+		j--;
 		
-		s1.push(eins);
-		s1.push(zwei);
-		s1.push(drei);
-		s1.push(vier);
-		System.out.println(s1.empty());
-		System.out.println(s1.pop());
-		System.out.println(s1.pop());
-		System.out.println(s1.pop());
-		System.out.println(s1.pop());
-		System.out.println(s1.empty());
+		return Stapel[j];
 		
 	}
-	*/
 }

@@ -1,12 +1,12 @@
 import java.util.*;
-
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class FktBerechnungen {
 	
-	// PrŸfung auf Art der Zeichen
+	// Prï¿½fung auf Art der Zeichen
 	
 	// TODO falls Zeit: try catch zur Ablaufsteuerung entfernen, Verrechnungen entfernen/ Vereinfachen?
-	// PrŸfung auf Zeichenreihenfolge (doppelte Rechenzeichen oder == )
+	// Prï¿½fung auf Zeichenreihenfolge (doppelte Rechenzeichen oder == )
 	public boolean doppelteZeichen(String funktion)
 	{
 		if (funktion.length()==0 || funktion.length()==1)
@@ -117,17 +117,17 @@ public class FktBerechnungen {
 	     Map<String, ZahlToken> konstanten = new HashMap<String, ZahlToken>();
 	     List<Map<String, ? extends Token>> maps = new ArrayList<Map<String, ? extends Token>>();
 	     
-	     // Operationsliste fŸllen
+	     // Operationsliste fï¿½llen
 	     for(Operation op:Operation.values())
 	     {
 	    	 rechenoperationen.put(op.getName(), op);
 	     }
 	     
-	     // EinfŸgen von Konstanten
+	     // Einfï¿½gen von Konstanten
 	     konstanten.put("PI", new ZahlToken(Math.PI));
 	     konstanten.put("E", new ZahlToken(Math.E));
 	     
-	     // Liste der Maps fŸllen
+	     // Liste der Maps fï¿½llen
 	     maps.add(rechenoperationen);
 	     maps.add(konstanten);
 		
@@ -138,10 +138,19 @@ public class FktBerechnungen {
 		int aktuellePos=0;
 		
 		
-		//Schleife Ÿber alle Zeichen des Eingabestrings
+		//Schleife ï¿½ber alle Zeichen des Eingabestrings
 		while(aktuellePos<funktion.length())
 		{
+			// aktueller Buchstabe
 			char aktuell= funktion.charAt(aktuellePos);
+			
+			// Hinzufï¿½gen einen Tokens fï¿½r die Variable (x)
+			if(aktuell=='x')
+			{
+				liste.add(new XToken());
+				aktuellePos++;
+				continue;
+			}
 			
 			if (Character.isDigit(aktuell))
 			{	
@@ -151,14 +160,16 @@ public class FktBerechnungen {
 			if(aktuell=='(')
 			{
 				liste.add(Klammern.OFF);
+				aktuellePos++;
 				
 			}
 			if(aktuell==')')
 			{
 				liste.add(Klammern.SCHLIES);
+				aktuellePos++;
 			}
 			else
-			{
+			{	// Das aktuelle Token wird mit jedem in Maps verglichen
 				for(Map<String,? extends Token> map : maps)
 				{
 					int tokenLaenge;
@@ -175,7 +186,6 @@ public class FktBerechnungen {
 		return liste;
 	}
 	
-	// TODO PrŸfung Gleitkommazahlen
 	public int findeZahl(List<Token> liste ,String funktion,int aktuellePos,char aktuell)
 	{
 		
@@ -234,14 +244,113 @@ public class FktBerechnungen {
 		return 0;
 	}
 	
-	public void infixNachUpn()
+	// TODO implizite Multiplikation zB. 2x+4
+	public void ersetzeX(int xwert, List<Token> liste)
 	{
+		for(int i=0;i<liste.size();i++)
+		{
+			if(liste.get(i) instanceof XToken)
+			{
+				liste.set(i, new ZahlToken(xwert));
+			}
+		}
 		
 	}
 	
-	public void upnNachDouble()
+	public List<Token> infixNachUpn(List<Token> liste)
 	{
+		List <Token> upnListe= new ArrayList<Token>();
 		
+		Stack operanten = new Stack(liste.size());
+		ArrayBlockingQueue<Token> ausgabe = new ArrayBlockingQueue<Token>(liste.size());
+		
+		int pos=0;
+		
+		while(pos<liste.size())
+		{
+			Token taktuell=liste.get(pos);
+			if(taktuell instanceof ZahlToken)
+			{
+				ausgabe.add(taktuell);
+				pos++;
+				continue;
+			}
+			if(taktuell.equals(Klammern.OFF))
+			{
+				operanten.push(taktuell);
+				pos++;
+				continue;
+				
+			}
+			if(taktuell instanceof Operation)
+			{
+				Operation optaktuell=(Operation)taktuell;
+				
+				Operation oben=null;
+				
+				if (operanten.readStack() instanceof Operation)
+				{
+				oben = (Operation) operanten.readStack();
+				}
+				
+				while(!operanten.empty() && operanten.readStack() instanceof Operation && optaktuell.getPriority()<oben.getPriority())
+				{
+					ausgabe.add((Token)operanten.pop());
+				}
+				operanten.push(taktuell);
+				pos++;
+				continue;
+			}
+			if(taktuell.equals(Klammern.SCHLIES))
+			{
+				while(!operanten.readStack().equals(Klammern.OFF))
+				{
+					ausgabe.add((Token) operanten.pop());
+				}
+				operanten.pop();
+				pos++;
+				continue;
+				
+			}
+			
+		}
+		
+		while(!operanten.empty())
+		{
+			ausgabe.add((Token) operanten.pop());
+		}
+		
+		for(Token t: ausgabe)
+		{
+			upnListe.add(t);
+		}
+		
+		return upnListe;
+		
+	}
+	
+	public double upnNachDouble(List<Token> upnListe)
+	{
+		Stack s = new Stack(upnListe.size());
+		
+		for(Token t: upnListe)
+		{
+			if(t instanceof ZahlToken)
+			{
+				s.push(t);
+			}
+			
+			if(t instanceof Operation)
+			{
+				ZahlToken rechts = (ZahlToken)s.pop();
+				ZahlToken links = (ZahlToken)s.pop();
+				
+				Operation o= (Operation)t;
+				double berechnung= o.berechne(links.getZahl(),rechts.getZahl());
+				s.push(new ZahlToken(berechnung));
+			}
+		}
+		return ((ZahlToken)s.pop()).getZahl();
 	}
 
 	

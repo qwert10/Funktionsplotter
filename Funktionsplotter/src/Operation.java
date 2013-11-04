@@ -2,28 +2,30 @@
 public enum Operation implements Token {
 
 	PLUS("+", 1) {
-        public int berechne(int a, int b) {
+        public double berechne(double a, double b) {
             return a+b;
         }
     },
 
     MINUS("-", 1) {
-        public int berechne(int a, int b) {
+        public double berechne(double a,double b) {
             return a-b;
         }
     },
 
     MAL("*", 2) {
-        public int berechne(int a, int b) {
+        public double berechne(double a,double b) {
             return a*b;
         }
     },
 
     DURCH("/", 2) {
-        public int berechne(int a, int b) {
+        public double berechne(double a, double b) {
             return a/b;
         }
     };
+    
+    public abstract double berechne(double a ,double b);
     
     private final int prioritaet;
     private final String name;
