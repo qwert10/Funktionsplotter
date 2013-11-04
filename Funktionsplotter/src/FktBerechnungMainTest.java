@@ -7,9 +7,14 @@ public class FktBerechnungMainTest {
 	public static void main(String[] args)
 	{
 		FktBerechnungen f =new FktBerechnungen();
-		List<Token> liste = f.tokenize("");
-		List<Token> zwei = f.infixNachUpn(liste);
-		System.out.println(f.upnNachDouble(zwei));
+			List<Token> liste = f.tokenize("x*x*x*x-4+1");
+			List<Token> zwei = f.infixNachUpn(liste);
+			for(int i=0; i<50;i++)
+			{
+				List<Token> drei= f.ersetzeX(i, zwei);
+				System.out.println("X Wert: "+i+" Y-Wert:" +f.upnNachDouble(drei));
+			}
+
 	
 		
 

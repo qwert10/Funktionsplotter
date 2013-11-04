@@ -117,17 +117,17 @@ public class FktBerechnungen {
 	     Map<String, ZahlToken> konstanten = new HashMap<String, ZahlToken>();
 	     List<Map<String, ? extends Token>> maps = new ArrayList<Map<String, ? extends Token>>();
 	     
-	     // Operationsliste f�llen
+	     // Operationsliste fuellen
 	     for(Operation op:Operation.values())
 	     {
 	    	 rechenoperationen.put(op.getName(), op);
 	     }
 	     
-	     // Einf�gen von Konstanten
+	     // Einfuegen von Konstanten
 	     konstanten.put("PI", new ZahlToken(Math.PI));
 	     konstanten.put("E", new ZahlToken(Math.E));
 	     
-	     // Liste der Maps f�llen
+	     // Liste der Maps fuellen
 	     maps.add(rechenoperationen);
 	     maps.add(konstanten);
 		
@@ -245,15 +245,22 @@ public class FktBerechnungen {
 	}
 	
 	// TODO implizite Multiplikation zB. 2x+4
-	public void ersetzeX(int xwert, List<Token> liste)
+	public List<Token> ersetzeX(int xwert, List<Token> liste)
 	{
+		List<Token> ergebnis= new ArrayList<Token>(liste.size());
 		for(int i=0;i<liste.size();i++)
 		{
 			if(liste.get(i) instanceof XToken)
 			{
-				liste.set(i, new ZahlToken(xwert));
+				ergebnis.add(i, new ZahlToken(xwert));
+				
+			}
+			else
+			{
+				ergebnis.add(i, liste.get(i));
 			}
 		}
+		return ergebnis;
 		
 	}
 	
@@ -269,7 +276,7 @@ public class FktBerechnungen {
 		while(pos<liste.size())
 		{
 			Token taktuell=liste.get(pos);
-			if(taktuell instanceof ZahlToken)
+			if(taktuell instanceof ZahlToken || taktuell instanceof XToken)
 			{
 				ausgabe.add(taktuell);
 				pos++;
@@ -293,7 +300,9 @@ public class FktBerechnungen {
 				oben = (Operation) operanten.readStack();
 				}
 				
-				while(!operanten.empty() && operanten.readStack() instanceof Operation && optaktuell.getPriority()<oben.getPriority())
+				while(!operanten.empty() && operanten.readStack() instanceof Operation &&
+						(optaktuell.getAsso()==1 && optaktuell.getPrioritaet()<=oben.getPrioritaet() || 
+						optaktuell.getPrioritaet()<oben.getPrioritaet()))
 				{
 					ausgabe.add((Token)operanten.pop());
 				}
