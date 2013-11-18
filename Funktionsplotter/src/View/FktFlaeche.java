@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.SwingConstants;
@@ -27,23 +28,11 @@ public class FktFlaeche extends JPanel {
 // TODO Paint Component Methode Verändern	
 	public void paintComponent(Graphics g)
 	{
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, 500, 500);
-		g.setColor(Color.GRAY);
-		g.drawLine(0,super.getHeight()/2, super.getWidth(), super.getHeight()/2); // X-Achse
-		g.drawLine(super.getWidth()/2,0, super.getWidth()/2, super.getHeight()); // Y-Achse
-		
-		for(int i=0;i<10;i++)
-		{
-			g.drawLine(i*(super.getWidth()/10), (super.getHeight()/2)-10,i*(super.getWidth()/10),(super.getHeight()/2)+10);
-		}
-		g.translate(super.getSize().width / 2, super.getSize().height / 2);
-
-		g.setColor(Color.RED);
+		vorbereitung(g);
 		/*
-		int[] xPoints={-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10};
-		int[] yPoints={100,81,64,49,36,25,16,9,4,1,0,1,4,9,16,25,36,49,64,81,100};
-		*/
+		g.setColor(Color.RED);
+		
+		
 		
 		// new 
 		FktBerechnungen f= new FktBerechnungen();
@@ -92,7 +81,7 @@ public class FktFlaeche extends JPanel {
 		
 		
 		
-	
+	*/
 	}
 	
 	public void setMinMax(double yMax,double yMin, double xMax, double xMin)
@@ -106,6 +95,76 @@ public class FktFlaeche extends JPanel {
 	public void setPunkte(double[][] pkt)
 	{
 		punkte=pkt;
+	}
+	
+	public void vorbereitung(Graphics g)
+	{
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, 500, 500);
+		g.setColor(Color.GRAY);
+		g.drawLine(0,super.getHeight()/2, super.getWidth(), super.getHeight()/2); // X-Achse
+		g.drawLine(super.getWidth()/2,0, super.getWidth()/2, super.getHeight()); // Y-Achse
+		
+		for(int i=0;i<10;i++)
+		{
+			g.drawLine(i*(super.getWidth()/10), (super.getHeight()/2)-5,i*(super.getWidth()/10),(super.getHeight()/2)+5);
+			g.drawLine((super.getWidth()/2)-5,i*super.getHeight()/10,(super.getWidth()/2)+5,i*super.getHeight()/10);
+		}
+		
+		beschriftung(g);
+		
+		g.translate(super.getSize().width / 2, super.getSize().height / 2);
+	}
+	
+	public void beschriftung(Graphics g)
+	{
+		if (Double.valueOf(xmin)!=null && Double.valueOf(xmax)!=null && Double.valueOf(ymin)!=null && Double.valueOf(ymax) != null)
+		{
+			double xdifferenz= xmax-xmin;
+			double xschritt = xdifferenz/10;
+			double[] xbeschriftung=new double[10];
+			
+			for (int i=0; i<xbeschriftung.length;i++)
+			{
+				xbeschriftung[i]=xmin+i*xschritt;	
+			}
+			
+			DecimalFormat x =new DecimalFormat();
+			
+			for (int i=0;i<10;i++)
+			{
+				g.drawString(""+x.format(xbeschriftung[i]), i*super.getWidth()/10, super.getHeight()/2+15);
+			}
+			
+			double ydifferenz=ymax-ymin;
+			double yschritt = ydifferenz/10;
+			double[]  ybeschriftung =new double[10];
+			double[] yinvertiert= new double[10];
+			
+			for (int i=0;i<ybeschriftung.length;i++)
+			{
+				ybeschriftung[i]=ymin+i*yschritt;
+			}
+			for (int i=0;i<ybeschriftung.length;i++)
+			{
+				yinvertiert[9-i]=ybeschriftung[i];
+			}
+
+			for(double d:yinvertiert)
+			{
+				System.out.println(d);
+			}
+			
+			
+			DecimalFormat y = new DecimalFormat();
+			
+			for (int i=0;i<10;i++)
+			{
+				g.drawString(""+y.format(yinvertiert[i]), super.getWidth()/2+10,i*super.getHeight()/10+10);
+			}
+		}
+		
+		
 	}
 	
 	

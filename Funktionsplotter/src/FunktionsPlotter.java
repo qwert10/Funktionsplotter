@@ -9,5 +9,11 @@ public class FunktionsPlotter {
 	GUI g = new GUI();
 	FktController c = new FktController(f,g);
 	
+	
 
+	public static void main(String[] args)
+	{
+		FunktionsPlotter f = new FunktionsPlotter();
+	}
 }
+

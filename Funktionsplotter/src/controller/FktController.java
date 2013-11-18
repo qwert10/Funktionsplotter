@@ -44,9 +44,10 @@ class ZeichenListener implements ActionListener {
 			return;
 		}
 
-		double[][] pkt =berechnung.berechneFunktion(funktion, xmin, xmax);
+		double[][] pkt = berechnung.berechneFunktion(funktion, xmin, xmax);
 		gui.getZeichenflaeche().setPunkte(pkt);
 		gui.getZeichenflaeche().setMinMax(ymax, ymin, xmax, xmin);
+		gui.getZeichenflaeche().repaint();
 		
 	}
 
