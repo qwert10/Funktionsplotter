@@ -99,16 +99,20 @@ public class FktFlaeche extends JPanel {
 	
 	public void vorbereitung(Graphics g)
 	{
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, 500, 500);
-		g.setColor(Color.GRAY);
-		g.drawLine(0,super.getHeight()/2, super.getWidth(), super.getHeight()/2); // X-Achse
-		g.drawLine(super.getWidth()/2,0, super.getWidth()/2, super.getHeight()); // Y-Achse
+		int width=super.getWidth()-20;
+		int height=super.getHeight()-20;
 		
-		for(int i=0;i<10;i++)
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, 520, 520);
+		g.setColor(Color.GRAY);
+		g.translate(10, 10);
+		g.drawLine(0,height/2, width, height/2); // X-Achse
+		g.drawLine(width/2,0, width/2, height); // Y-Achse
+		
+		for(int i=0;i<11;i++)
 		{
-			g.drawLine(i*(super.getWidth()/10), (super.getHeight()/2)-5,i*(super.getWidth()/10),(super.getHeight()/2)+5);
-			g.drawLine((super.getWidth()/2)-5,i*super.getHeight()/10,(super.getWidth()/2)+5,i*super.getHeight()/10);
+			g.drawLine(i*(width/10), (height/2)-5,i*(width/10),(height/2)+5);
+			g.drawLine((width/2)-5,i*height/10,(width/2)+5,i*height/10);
 		}
 		
 		beschriftung(g);
@@ -118,11 +122,14 @@ public class FktFlaeche extends JPanel {
 	
 	public void beschriftung(Graphics g)
 	{
+		int width= super.getWidth()-20;
+		int height= super.getHeight()-20;
+		
 		if (Double.valueOf(xmin)!=null && Double.valueOf(xmax)!=null && Double.valueOf(ymin)!=null && Double.valueOf(ymax) != null)
 		{
 			double xdifferenz= xmax-xmin;
 			double xschritt = xdifferenz/10;
-			double[] xbeschriftung=new double[10];
+			double[] xbeschriftung=new double[11];
 			
 			for (int i=0; i<xbeschriftung.length;i++)
 			{
@@ -131,15 +138,18 @@ public class FktFlaeche extends JPanel {
 			
 			DecimalFormat x =new DecimalFormat();
 			
-			for (int i=0;i<10;i++)
+			for (int i=0;i<11;i++)
 			{
-				g.drawString(""+x.format(xbeschriftung[i]), i*super.getWidth()/10, super.getHeight()/2+15);
+				if(xbeschriftung[i]!=0)
+				{
+				g.drawString(""+x.format(xbeschriftung[i]), i*width/10, height/2+20);
+				}
 			}
 			
 			double ydifferenz=ymax-ymin;
 			double yschritt = ydifferenz/10;
-			double[]  ybeschriftung =new double[10];
-			double[] yinvertiert= new double[10];
+			double[]  ybeschriftung =new double[11];
+			double[] yinvertiert= new double[11];
 			
 			for (int i=0;i<ybeschriftung.length;i++)
 			{
@@ -147,22 +157,22 @@ public class FktFlaeche extends JPanel {
 			}
 			for (int i=0;i<ybeschriftung.length;i++)
 			{
-				yinvertiert[9-i]=ybeschriftung[i];
+				yinvertiert[10-i]=ybeschriftung[i];
 			}
-
-			for(double d:yinvertiert)
-			{
-				System.out.println(d);
-			}
-			
 			
 			DecimalFormat y = new DecimalFormat();
 			
-			for (int i=0;i<10;i++)
+			for (int i=0;i<11;i++)
 			{
-				g.drawString(""+y.format(yinvertiert[i]), super.getWidth()/2+10,i*super.getHeight()/10+10);
+				if(yinvertiert[i]!=0)
+				{
+				g.drawString(""+y.format(yinvertiert[i]), width/2+10,i*height/10+5);
+				}
 			}
+			if(xbeschriftung[5]==0 && ybeschriftung[5]==0)
+			g.drawString(""+0, width/2+10, height/2+20);
 		}
+		
 		
 		
 	}

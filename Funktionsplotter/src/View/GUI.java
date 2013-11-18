@@ -53,82 +53,83 @@ public class GUI extends JFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 724, 562);
+		frame.setBounds(100, 100, 744, 582);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		Zeichenflaeche = new FktFlaeche();
-		Zeichenflaeche.setBounds(8, 19, 500, 500);
+		Zeichenflaeche.setBounds(8, 19, 520, 520);
 		frame.getContentPane().add(Zeichenflaeche);
 		Zeichenflaeche.setLayout(null);
 		
+		int width=20;
 		
 		TextFFkt = new JTextField();
-		TextFFkt.setBounds(555, 86, 134, 28);
+		TextFFkt.setBounds(555+width, 86, 134, 28);
 		frame.getContentPane().add(TextFFkt);
 		TextFFkt.setColumns(10);
 		
 		JLabel FktGleichung = new JLabel("Funktionsgleichung");
 		FktGleichung.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		FktGleichung.setBounds(565, 55, 134, 22);
+		FktGleichung.setBounds(565+width, 55, 134, 22);
 		frame.getContentPane().add(FktGleichung);
 		
 		JLabel y = new JLabel("y=");
-		y.setBounds(533, 92, 43, 16);
+		y.setBounds(533+width, 92, 43, 16);
 		frame.getContentPane().add(y);
 		
 		JLabel lblKoordinatensystem = new JLabel("Koordinatensystem");
 		lblKoordinatensystem.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		lblKoordinatensystem.setBounds(565, 138, 123, 28);
+		lblKoordinatensystem.setBounds(565+width, 138, 123, 28);
 		frame.getContentPane().add(lblKoordinatensystem);
 		
 		xminT = new JTextField();
 		xminT.setText("-5");
-		xminT.setBounds(555, 178, 134, 28);
+		xminT.setBounds(555+width, 178, 134, 28);
 		frame.getContentPane().add(xminT);
 		xminT.setColumns(10);
 		
 		xmaxT = new JTextField();
 		xmaxT.setText("5");
-		xmaxT.setBounds(555, 218, 134, 28);
+		xmaxT.setBounds(555+width, 218, 134, 28);
 		frame.getContentPane().add(xmaxT);
 		xmaxT.setColumns(10);
 		
 		yminT = new JTextField();
 		yminT.setText("-5");
-		yminT.setBounds(555, 261, 134, 28);
+		yminT.setBounds(555+width, 261, 134, 28);
 		frame.getContentPane().add(yminT);
 		yminT.setColumns(10);
 		
 		ymaxT = new JTextField();
 		ymaxT.setText("5");
-		ymaxT.setBounds(555, 301, 134, 28);
+		ymaxT.setBounds(555+width, 301, 134, 28);
 		frame.getContentPane().add(ymaxT);
 		ymaxT.setColumns(10);
 		
 		Zeichnen = new JButton("Zeichnen");
-		Zeichnen.setBounds(560, 341, 117, 29);
+		Zeichnen.setBounds(560+width, 341, 117, 29);
 		frame.getContentPane().add(Zeichnen);
 		
 		Loeschen = new JButton("L\u00F6schen");
-		Loeschen.setBounds(560, 382, 117, 29);
+		Loeschen.setBounds(560+width, 382, 117, 29);
 		frame.getContentPane().add(Loeschen);
 		
 		JLabel lblXmin = new JLabel("Xmin");
-		lblXmin.setBounds(515, 184, 61, 16);
+		lblXmin.setBounds(515+width, 184, 61, 16);
 		frame.getContentPane().add(lblXmin);
 		
 		JLabel lblXmax = new JLabel("Xmax");
-		lblXmax.setBounds(515, 224, 61, 16);
+		lblXmax.setBounds(515+width, 224, 61, 16);
 		frame.getContentPane().add(lblXmax);
 		
 		JLabel lblYmin = new JLabel("Ymin");
-		lblYmin.setBounds(515, 267, 61, 16);
+		lblYmin.setBounds(515+width, 267, 61, 16);
 		frame.getContentPane().add(lblYmin);
 		
 		JLabel lblYmax = new JLabel("Ymax");
-		lblYmax.setBounds(515, 307, 61, 16);
+		lblYmax.setBounds(515+width, 307, 61, 16);
 		frame.getContentPane().add(lblYmax);
 		
 	
