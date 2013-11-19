@@ -25,63 +25,52 @@ public class FktFlaeche extends JPanel {
 	private double xmin;
 	private double[][] punkte;
 
-// TODO Paint Component Methode Verändern	
 	public void paintComponent(Graphics g)
-	{
+	{ 
 		vorbereitung(g);
-		/*
+		if(punkte!=null)
+		{
+		
+		g.translate(-10,-10);
 		g.setColor(Color.RED);
 		
+		double[] xPoints= new double[punkte.length];
+		double[] yPoints= new double[punkte.length];
 		
+		int i=0;
 		
-		// new 
-		FktBerechnungen f= new FktBerechnungen();
-		
-		
-		int[] xPoints= new int[60];
-		int[] yPoints= new int[60];
-		
-		List<Token> liste = f.tokenize("1");
-		List<Token> zwei = f.infixNachUpn(liste);	
-
-		int a= -10;
-		int b= Math.abs(a)+50;
-		for(int i=0; i<b;i++)
-		{	
-			List<Token> drei= f.ersetzeX(a, zwei);
-			xPoints[i]=a;
-			yPoints[i]=(int)f.upnNachDouble(drei);
-			a++;
-		}
-		// new end
-
-		for(int i=0;i<yPoints.length;i++)
+		for (double[] d:punkte)
 		{
-			yPoints[i]=-yPoints[i];
+			
+			xPoints[i]=d[0];
+			yPoints[i]=d[1];
+			i++;
 		}
-		int nPoints=xPoints.length;
 		
-		int xdifferenz=Math.abs(xmax)+Math.abs(xmin);
-		int ydifferenz=Math.abs(ymax)+Math.abs(ymin);
+		double xdifferenz=Math.abs(xmax)+Math.abs(xmin);
+		double ydifferenz=Math.abs(ymax)+Math.abs(ymin);
 		
 		int[] xPixel=new int[xPoints.length];
 		int[] yPixel=new int[yPoints.length];
 		
-		for(int i=0; i<xPixel.length;i++)
+		for(int j=0; j<xPixel.length;j++)
 		{
-			xPixel[i]=(super.getWidth()*xPoints[i])/xdifferenz;
+			
+			xPixel[j]= (int) (((super.getWidth()-20)*xPoints[j])/xdifferenz);
 		}
 		
-		for(int i=0; i<yPixel.length;i++)
+		for(int j=0; j<yPixel.length;j++)
 		{
-			yPixel[i]=(super.getHeight()*yPoints[i])/ydifferenz;
+			yPixel[j]=(int) (((super.getHeight()-20)*yPoints[j])/ydifferenz);
+		}
+		for (int j=0;j<yPixel.length; j++)
+		{
+			yPixel[j]=-yPixel[j];
 		}
 		
-		g.drawPolyline(xPixel, yPixel, nPoints);
+		g.drawPolyline(xPixel, yPixel, xPixel.length);
+		}
 		
-		
-		
-	*/
 	}
 	
 	public void setMinMax(double yMax,double yMin, double xMax, double xMin)
@@ -125,7 +114,7 @@ public class FktFlaeche extends JPanel {
 		int width= super.getWidth()-20;
 		int height= super.getHeight()-20;
 		
-		if (Double.valueOf(xmin)!=null && Double.valueOf(xmax)!=null && Double.valueOf(ymin)!=null && Double.valueOf(ymax) != null)
+		if (xmin!=0 && xmax!=0 && ymin!=0 && ymax !=0)
 		{
 			double xdifferenz= xmax-xmin;
 			double xschritt = xdifferenz/10;
