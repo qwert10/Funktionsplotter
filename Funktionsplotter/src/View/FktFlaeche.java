@@ -4,6 +4,15 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.text.DecimalFormat;
 
+/**
+ * Zeichenfläche für die Funktion.
+ * @author smodlich
+ * double[][] punkte: Array mit den X und Y Werten
+ * double ymax Maximum der Y Werte
+ * double ymin Minimum der Y Werte
+ * double xmax Maximum der X Werte
+ * double xmin Minimum der X Werte
+ */
 
 public class FktFlaeche extends JPanel {
 	private double ymax;
@@ -12,6 +21,9 @@ public class FktFlaeche extends JPanel {
 	private double xmin;
 	private double[][] punkte;
 
+	/**
+	 * Paint Component Methode der Oberklasse wird überschrieben um Funktion zu Zeichnen ruft vorbereitungs Methode auf.s
+	 */
 	public void paintComponent(Graphics g)
 	{ 
 		vorbereitung(g);
@@ -59,7 +71,13 @@ public class FktFlaeche extends JPanel {
 		}
 		
 	}
-	
+	/**
+	 * setzt die entsprechenden Minima und Maxima für die Zeichnung
+	 * @param yMax
+	 * @param yMin
+	 * @param xMax
+	 * @param xMin
+	 */
 	public void setMinMax(double yMax,double yMin, double xMax, double xMin)
 	{
 		ymax=yMax;
@@ -68,11 +86,19 @@ public class FktFlaeche extends JPanel {
 		xmax=xMax;
 	}
 
+	/**
+	 * setzt das Array der XWerte und der Funktionswerte
+	 * @param pkt
+	 */
 	public void setPunkte(double[][] pkt)
 	{
 		punkte=pkt;
 	}
 	
+	/**
+	 * Ruft Beschriftungsfunktion auf und zeichnet Achsen mit Zehnereinteilung.
+	 * @param g das Graphics Objekt auf dem gezeichnet wird.
+	 */
 	public void vorbereitung(Graphics g)
 	{
 		int width=super.getWidth()-20;
@@ -95,7 +121,10 @@ public class FktFlaeche extends JPanel {
 		
 		g.translate(super.getSize().width / 2, super.getSize().height / 2);
 	}
-	
+	/**
+	 * Zeichnet die Beschriftung der Achsen mit xmin, xmax, ymin, ymax
+	 * @param g, dass Graphics Objekt auf dem gezeichnet wird.
+	 */
 	public void beschriftung(Graphics g)
 	{
 		int width= super.getWidth()-20;

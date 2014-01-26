@@ -2,6 +2,13 @@ package model;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
+/**
+ * Zentrale Berechnungsklasse. Der Zugang von außen ist durch die Funktion berechnetFunktion gekapselt.
+ * Hält Funktionen zum zersetzen (tokenizen) des Eingabestrings bereit und zur Umwandlung von Infix in umgekehrte polnische Notation
+ * und zur Berrechnung von Funktionen bereit.
+ * @author smodlich
+ *
+ */
 public class FktBerechnungen {
 	private Map<String,Operation> rechenoperationen;
 	private Map<String, ZahlToken> konstanten;
@@ -10,10 +17,10 @@ public class FktBerechnungen {
 	private List<Token> tokenliste;
 	private List<Token> upnListe;	
 	
-	// TODO falls Zeit: try catch zur Ablaufsteuerung entfernen, Verrechnungen entfernen/ Vereinfachen?
-	// Prüfung auf Zeichenreihenfolge (doppelte Rechenzeichen oder == )
-	
-	// Erstellt Tokens aus dem Eingabestring
+	/**
+	 * Zersetzt den Eingabestring, Varible funktion dieser Klasse, zu einer Liste von Tokens
+	 * @throws TokenizeException
+	 */
 	public void tokenize() throws TokenizeException
 	{	
 		// Maps die alle Operationen,Konstanten enthalten
@@ -95,6 +102,15 @@ public class FktBerechnungen {
 		}
 		tokenliste=liste;
 	}
+	/**
+	 * Funktion, die Zahlen im Eingabestring findet insbesondere Zahlen mit enthaltenem Komma
+	 * @param liste Die Eingabeliste
+	 * @param funktion der Funktionsstring
+	 * @param aktuellePos aktuelle Position in der eine Zahl gefunden werden soll
+	 * @param aktuell char auf der Position aktuell
+	 * @return gibt die Endposition einer Zahl wieder
+	 * @throws NumberFormatException
+	 */
 	
 	public int findeZahl(List<Token> liste ,String funktion,int aktuellePos,char aktuell) throws NumberFormatException
 	{
@@ -135,7 +151,15 @@ public class FktBerechnungen {
 		return nachfolger;
 	}
 	
-	
+	/**
+	 * Erkennt ein Token (Funktion oder Operation) indem es durch die gesamt Tokenliste iteriert und prüft ob das Token eines
+	 * der Tokens in der Liste ist. Wenn dies der Fall ist, das gefundene Token der Liste hinzugefügt.
+	 * @param m Map, in der alle Tokens enthalten sind
+	 * @param aktuellePos die aktuelle Position in der ein Token gefunden werden soll
+	 * @param funktion der String der verarbeitet wird
+	 * @param liste die Tokenliste zu der das gefundene Token hinzugefügt wird
+	 * @return
+	 */
 	public int erkenneToken(Map<String, ? extends Token> m,int aktuellePos, String funktion, List<Token> liste)
 	{
 		int tokenLaenge=0;
@@ -154,7 +178,12 @@ public class FktBerechnungen {
 		return 0;
 	}
 	
-	// TODO implizite Multiplikation zB. 2x+4
+	/**
+	 * Ersetzt in der Liste xListe alle XToken durch das ZahlToken mit dem Wert xwert
+	 * @param xwert der Wert der für X eingesetzt werden soll
+	 * @param xListe Liste in der X ersetzt werden soll
+	 * @return die Liste mit den Ersetzungen
+	 */
 	public List<Token> ersetzeX(double xwert, List<Token> xListe)
 	{
 		List<Token> ergebnis= new ArrayList<Token>(xListe.size());
@@ -174,6 +203,30 @@ public class FktBerechnungen {
 		
 	}
 	
+	/**
+	 * Ersetzt in der Liste tokenlist alle Kombinationen (von links): ZahlToken XToken durch ZahlToken MAL XToken
+	 */
+	public void implizitMulti()
+	{	
+		
+		for (int i = 0; i < tokenliste.size()-1; i++) {
+			
+			if(tokenliste.get(i) instanceof ZahlToken)
+			{
+				if(tokenliste.get(i+1) instanceof XToken)
+				{
+					tokenliste.add(i+1, Operation.MAL);
+				}
+				
+			}
+			
+		}
+		
+	}
+	/**
+	 * Wandelt die tokenliste von der Infix Notation in die umgekehrte polnische Notation um. Dazu wird der Shunting-Yard Algorithmus
+	 * verwendet. Das Ergebnis wird in der upnListe gespeichert.
+	 */
 	public void infixNachUpn()
 	{
 		 upnListe= new ArrayList<Token>();
@@ -247,7 +300,11 @@ public class FktBerechnungen {
 		
 		
 	}
-	
+	/**
+	 * Benötigt eine UPN-Liste als Eingabeliste. Wertet die UPN Liste aus, d.h. errechnet ein Ergebnis des Ausdruckes. 
+	 * @param doublelist die UPN Liste, deren Wert errechnet werden soll.
+	 * @return Ergebnis der Auswertung als Double Zahl
+	 */
 	public double upnNachDouble(List<Token> doublelist)
 	{
 		Stack s = new Stack(doublelist.size());
@@ -272,7 +329,16 @@ public class FktBerechnungen {
 		return ((ZahlToken)s.pop()).getZahl();
 	}
 
-	
+	/**
+	 * Berrechnet zwischen xmin und xmax mit 50 Stützpunkten die Funktionswerte.
+	 * Funktion die die Funktionen dieser Klasse in der richtigen Reihenfolge zusammenfasst, so dass kein Vorwissen nötig ist um die
+	 * Funktionen für einen Funktionsplotter zu benutzen.
+	 * @param Funktion der Funktionsstring
+	 * @param xmin das Miniumum der xWerte
+	 * @param xmax das Maximum der XWerte
+	 * @return ein Array, dass die XWerte und die zugehörigen YWerte enthält 
+	 * @throws Exception
+	 */
 	public double[][] berechneFunktion(String Funktion, double xmin, double xmax) throws Exception
 	{
 		try
@@ -291,7 +357,7 @@ public class FktBerechnungen {
 		{
 			throw new Exception("Falsche Klammern!");
 		}
-		
+		implizitMulti();
 		try
 		{
 			infixNachUpn();

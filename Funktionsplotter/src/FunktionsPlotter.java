@@ -2,7 +2,11 @@ import controller.FktController;
 import View.GUI;
 import model.FktBerechnungen;
 
-
+/**
+ * Startklasse zum ersten aufrufen des Funktionsplotter. Erzeugt GUI und Controller. Enthält main Methode.
+ * @author smodlich
+ *
+ */
 public class FunktionsPlotter {
 	
 	FktBerechnungen f = new FktBerechnungen();

@@ -1,5 +1,12 @@
 package model;
 
+/**
+ * Enum Klasse, die die Rechenoperationen der Funktion bereithält, die durch ein Rechenzeichen ausgedrückt werden können.
+ * Außerdem wird die Priorität erfasst um zum Beispiel Multiplikation von Addition zu berrechnen. Für die Berrechnung der Potenzen
+ * muss außerdem die Assoziativität beachtet werden. Diese wird durch einen einfachen Zahlenwert (2 ist rechtsassoziativ) angegeben. 
+ * @author smodlich
+ *
+ */
 public enum Operation implements Token {
 
 	PLUS("+", 1,1) {

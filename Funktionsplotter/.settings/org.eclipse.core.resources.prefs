@@ -1,4 +1,15 @@
 eclipse.preferences.version=1
+encoding//src/FunktionsPlotter.java=UTF-8
 encoding//src/View/FktFlaeche.java=UTF-8
+encoding//src/View/GUI.java=UTF-8
+encoding//src/controller/FktController.java=UTF-8
 encoding//src/model/Eingabepruefung.java=UTF-8
 encoding//src/model/FktBerechnungen.java=UTF-8
+encoding//src/model/Klammern.java=UTF-8
+encoding//src/model/Operation.java=UTF-8
+encoding//src/model/ParenMatcher.java=UTF-8
+encoding//src/model/Stack.java=UTF-8
+encoding//src/model/Token.java=UTF-8
+encoding//src/model/TokenizeException.java=UTF-8
+encoding//src/model/XToken.java=UTF-8
+encoding//src/model/ZahlToken.java=UTF-8

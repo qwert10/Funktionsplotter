@@ -1,9 +1,13 @@
 package model;
 import java.awt.*;
 import java.awt.event.*;
-
+/**
+ * Klasse für Klammernprüfung in einem String.
+ * @author smodlich
+ * inputString ist der Eingabe String für den die Klammernprüfung durchgeführt werden soll
+ */
 public class ParenMatcher{
-  private String inputString, outputString;
+  private String inputString;
   	
   private boolean match(char c, char d){
     switch(c){
@@ -13,7 +17,10 @@ public class ParenMatcher{
       default : return false;
     }
   }
-  	
+  	/**
+  	 * führt die Klammernprüfung im inputString durch
+  	 * @return
+  	 */
   public boolean parenMatch(){
     
     int n=inputString.length();
@@ -22,19 +29,17 @@ public class ParenMatcher{
     char c,d;
     while(i<n){
       d=inputString.charAt(i);
-      if(d=='('||d=='['||d=='{'){          //?ffnende Klammer
+      if(d=='('||d=='['||d=='{'){          
       
     	  parenStack.push(d);
 
       }else if(d==')'||d==']'||d=='}'){
         if(parenStack.empty()){
         	return false;
-            //Stack leer
 
         }else{
           c=((Character)parenStack.pop()).charValue();
           if(!match(c,d)){
-            //keine ?bereinstimmung von d und dem top vom Stack
         	  return false;
 
           }
@@ -69,9 +74,5 @@ public class ParenMatcher{
   	
   public void setInput(String input){
     inputString=input;
-  }
-
-  public String getOutput(){
-    return outputString;
   }
 }

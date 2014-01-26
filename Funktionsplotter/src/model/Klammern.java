@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Klasse die für die Klammern nötig ist implementiert das Token Interface.
+ * @author smodlich
+ *
+ */
 public enum Klammern implements Token {
 	OFF("("),SCHLIES(")");
 	

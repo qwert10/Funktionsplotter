@@ -16,6 +16,11 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI Klasse, die get und set Methoden bietet und die Buttons und Eingabefelder bereithält.
+ * @author smodlich
+ *
+ */
 
 public class GUI extends JFrame {
 
@@ -32,7 +37,7 @@ public class GUI extends JFrame {
 	private JButton zoomout = new JButton("-");
 
 	/**
-	 * Launch the application.
+	 * Startet die GUI
 	 */
 	public static void main(String[] args) {
 
@@ -146,6 +151,7 @@ public class GUI extends JFrame {
 	
 		
 	}
+	
 	
 	public double getXmin()
 	{
