@@ -24,7 +24,16 @@ public enum Operation implements Token {
         public double berechne(double a, double b) {
             return a/b;
         }
+    },
+    
+    HOCH("^", 3,2) {
+        public double berechne(double a, double b) {
+            return Math.pow(a, b);
+        }
     };
+    ;
+    
+    
     
     public abstract double berechne(double a ,double b);
     

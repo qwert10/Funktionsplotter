@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 
 import javax.swing.SwingConstants;
+import java.awt.event.ActionEvent;
 
 
 public class GUI extends JFrame {
@@ -27,6 +28,8 @@ public class GUI extends JFrame {
 	private FktFlaeche Zeichenflaeche;
 	private JButton Zeichnen;
 	private JButton Loeschen;
+	private JButton zoomin = new JButton("+");
+	private JButton zoomout = new JButton("-");
 
 	/**
 	 * Launch the application.
@@ -132,6 +135,14 @@ public class GUI extends JFrame {
 		lblYmax.setBounds(515+width, 307, 61, 16);
 		frame.getContentPane().add(lblYmax);
 		
+		// JButton zoomin = new JButton("+");
+		zoomin.setBounds(585, 423, 44, 22);
+		frame.getContentPane().add(zoomin);
+		
+		// JButton zoomout = new JButton("-");
+		zoomout.setBounds(648, 423, 44, 22);
+		frame.getContentPane().add(zoomout);
+		
 	
 		
 	}
@@ -166,8 +177,19 @@ public class GUI extends JFrame {
 	
 	public void addLoeschenListener(ActionListener loeschenlistener)
 	{
-		Zeichnen.addActionListener(loeschenlistener);
+		Loeschen.addActionListener(loeschenlistener);
 	}
+	
+	public void addZoomInListener(ActionListener zoominlistener)
+	{
+		zoomin.addActionListener(zoominlistener);
+	}
+	
+	public void addZoomOutListener(ActionListener zoomoutlistener)
+	{
+		zoomout.addActionListener(zoomoutlistener);
+	}
+	
 	public void displayErrorMessage(String errorMessage)
 	{	       	
         JOptionPane.showMessageDialog(this, errorMessage);      
@@ -176,5 +198,21 @@ public class GUI extends JFrame {
 	{
 		return Zeichenflaeche;
 	}
-
+	
+	public JTextField getXmaxButton()
+	{
+		return xmaxT;
+	}
+	public JTextField getXminButton()
+	{
+		return xminT;
+	}
+	public JTextField getYmaxButton()
+	{
+		return ymaxT;
+	}
+	public JTextField getYminButton()
+	{
+		return yminT;
+	}
 }

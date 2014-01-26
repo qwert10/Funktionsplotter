@@ -1,21 +1,8 @@
 package View;
-import java.awt.EventQueue;
 import java.awt.Graphics;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Color;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.Font;
 import java.text.DecimalFormat;
-import java.util.List;
-
-import javax.swing.SwingConstants;
-
-import model.FktBerechnungen;
-import model.Token;
 
 
 public class FktFlaeche extends JPanel {

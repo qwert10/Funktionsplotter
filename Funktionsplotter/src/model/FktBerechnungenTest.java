@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class FktBerechnungenTest {
 
-	FktBerechnungen f = new FktBerechnungen();
+	Eingabepruefung f = new Eingabepruefung();
 	@Test
 	public void testDoppelteZeichen() {
 		assertTrue(f.doppelteZeichen("(("));
@@ -20,25 +20,6 @@ public class FktBerechnungenTest {
 		assertFalse(f.doppelteZeichen("-^"));
 		assertTrue(f.doppelteZeichen("^-"));
 	}
-	
-	@Test
-	public void klammernTest()
-	{
-		assertTrue(f.klammernPruefen("(())"));
-		assertFalse(f.klammernPruefen("("));
-		assertFalse(f.klammernPruefen("834jfdifi3(sdsdsds))"));
-		
-	}
 
-	@Test
-	public void variablenTest()
-	{
-		assertTrue(f.variablenPruefung("x"));
-		assertFalse(f.variablenPruefung("xx"));
-		assertFalse(f.variablenPruefung("xy"));
-		assertTrue(f.variablenPruefung("y=5x^2+3x"));
-		assertFalse(f.variablenPruefung("5x+3xy+2"));
-		
-	}
 
 }

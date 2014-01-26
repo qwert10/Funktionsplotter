@@ -8,116 +8,13 @@ public class FktBerechnungen {
 	private List<Map<String, ? extends Token>> maps;
 	private String funktion;
 	private List<Token> tokenliste;
-	private List<Token> upnListe;
-	
-	// Prüfung auf Art der Zeichen
+	private List<Token> upnListe;	
 	
 	// TODO falls Zeit: try catch zur Ablaufsteuerung entfernen, Verrechnungen entfernen/ Vereinfachen?
 	// Prüfung auf Zeichenreihenfolge (doppelte Rechenzeichen oder == )
-	public boolean doppelteZeichen(String funktion)
-	{
-		if (funktion.length()==0 || funktion.length()==1)
-			return true;
-		
-		for(int i=0;i<=funktion.length();i++)
-		{
-			char test;
-			char next;
-			// Wenn Exeption auftritt kann abgebrochen werden, da keine Zeichen mehr vorhanden sind
-			try
-			{
-			 test =funktion.charAt(i);
-			 next =funktion.charAt(i+1);
-			}
-			
-			catch(StringIndexOutOfBoundsException e)
-			{
-				return true;
-			}
-			
-			if (test=='+' || test=='-' || test=='*' || test=='/' || test=='^'  )
-			{
-				if (test=='^' && next=='-' || test=='^' && next=='+')
-				{
-					
-				}	
-				else
-				
-				{
-					// doppelte Rechenzeichen und auch zB -=
-					if (next=='+' || next=='-' || next=='*' || next=='/' || next=='^' || next=='=')
-					{
-						return false;
-					}
-				
-				}
-				
-			}
-			//Spezialfall == 
-			if(test=='=' && next=='=' || test=='=' && next=='*'|| test=='=' && next=='/' || test=='/' && next=='=' || test=='*' && next=='=' )
-				return false;
-			
-			
-		}
-		
-		return true;
-	}
-	
-	public boolean klammernPruefen(String funktion)
-	{
-		ParenMatcher pm = new ParenMatcher();
-		pm.setInput(funktion);
-		return(pm.parenMatch());
-	}
-
-	// TODO falls Zeit: try catch zur Ablaufsteuerung entfernen
-	public boolean variablenPruefung(String funktion)
-	{
-		for(int i=0;i<funktion.length();i++)
-		{
-			char test;
-			char next;
-			try
-			{
-			test=funktion.charAt(i);
-			next=funktion.charAt(i+1);
-			}
-			catch(StringIndexOutOfBoundsException e)
-			{
-				// Funktion zu Ende
-				return true;
-			}
-			
-			if (Character.isLetter(test))
-				if (Character.isLetter(next))
-				{
-					return false;
-				}
-				
-		}
-		return true;
-	}
-	
-	// entfernt alle Sonderzeichen und Leerzeichen (zB. Backslash etc.)
-	public void entferneSonstigeZeichen(String funktion)
-	{
-		char test;
-		for(int i=0;i<=funktion.length()-1;i++)
-		{
-			test=funktion.charAt(i);
-	    
-			if(!(Character.isLetterOrDigit(test) || test=='+' || test=='-' || test=='*' || test=='/'))
-			{
-	    	funktion.replace(test, ' ');
-			}
-	    
-		}
-		
-		funktion.replaceAll("\\s", "");
-	}
 	
 	// Erstellt Tokens aus dem Eingabestring
-	public void tokenize()
+	public void tokenize() throws TokenizeException
 	{	
 		// Maps die alle Operationen,Konstanten enthalten
 		 rechenoperationen = new HashMap<String, Operation>();
@@ -146,6 +43,7 @@ public class FktBerechnungen {
 		
 		
 		//Schleife �ber alle Zeichen des Eingabestrings
+		außen:
 		while(aktuellePos<funktion.length())
 		{
 			// aktueller Buchstabe
@@ -168,12 +66,14 @@ public class FktBerechnungen {
 			{
 				liste.add(Klammern.OFF);
 				aktuellePos++;
+				continue;
 				
 			}
 			if(aktuell==')')
 			{
 				liste.add(Klammern.SCHLIES);
 				aktuellePos++;
+				continue;
 			}
 			else
 			{	// Das aktuelle Token wird mit jedem in Maps verglichen
@@ -184,16 +84,19 @@ public class FktBerechnungen {
 					if (tokenLaenge!=0)
 					{
 						aktuellePos=aktuellePos+tokenLaenge;
+						continue außen;
 					}
 					
-				}
+					
+				}	
+					throw new TokenizeException("Zeichen an Stelle: " + aktuellePos +" konnte nicht erkannt werden!");
 			}
 			
 		}
 		tokenliste=liste;
 	}
 	
-	public int findeZahl(List<Token> liste ,String funktion,int aktuellePos,char aktuell)
+	public int findeZahl(List<Token> liste ,String funktion,int aktuellePos,char aktuell) throws NumberFormatException
 	{
 		
 		Double ergebnis;
@@ -225,7 +128,7 @@ public class FktBerechnungen {
 			catch (NumberFormatException e)
 			{
 				System.out.println(e.toString());
-				System.out.println("Es ist eine Parse Exeption aufgetreten");
+				System.out.println("Es ist eine Zahlen Parse Exeption aufgetreten Position: " + aktuellePos);
 			}
 			
 		
@@ -370,26 +273,56 @@ public class FktBerechnungen {
 	}
 
 	
-	public double[][] berechneFunktion(String funktione, double xmin, double xmax)
+	public double[][] berechneFunktion(String Funktion, double xmin, double xmax) throws Exception
 	{
-		funktion=funktione;
-		tokenize();
-		infixNachUpn();
-		
-		int stuetzpunkte = 0;
-		double differenz =(xmax-xmin);
-		stuetzpunkte = (int)(differenz/0.1);
-		
-		double[][] ergebnis= new double[stuetzpunkte][2];
-		
-		for(int i=0;i<stuetzpunkte;i++)
+		try
 		{
-			ergebnis[i][0]=xmin+(i*0.1);
-			List<Token> x= ersetzeX((xmin+i*0.1),upnListe);
-			ergebnis[i][1]=upnNachDouble(x);
+		funktion=Funktion;
+		tokenize();
+		}
+		catch(TokenizeException t)
+		{
+			throw t;
 		}
 		
-		return ergebnis;
+		ParenMatcher pm = new ParenMatcher();
+		pm.setInput(funktion);
+		if(!pm.parenMatch())
+		{
+			throw new Exception("Falsche Klammern!");
+		}
+		
+		try
+		{
+			infixNachUpn();
+			int stuetzpunkte = 0;
+			double differenz =(xmax-xmin);
+			stuetzpunkte = (int)(differenz/0.1);
+			
+			double[][] ergebnis= new double[stuetzpunkte][2];
+			
+			for(int i=0;i<stuetzpunkte;i++)
+			{
+				ergebnis[i][0]=xmin+(i*0.1);
+				List<Token> x= ersetzeX((xmin+i*0.1),upnListe);
+				ergebnis[i][1]=upnNachDouble(x);
+			}
+			
+			return ergebnis;
+		}
+		catch (Exception e)
+		{
+			throw new Exception(" Fehler beim Parsen. Falsche Zeichenreihenfolge? ");
+		}
+		
+		
+			
+			
+		
+		
+		
+		
+		
 		
 	}
 	
