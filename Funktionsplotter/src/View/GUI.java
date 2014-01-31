@@ -35,6 +35,8 @@ public class GUI extends JFrame {
 	private JButton Loeschen;
 	private JButton zoomin = new JButton("+");
 	private JButton zoomout = new JButton("-");
+	private JTextField textField;
+	private JTextField stuetzpunkte;
 
 	/**
 	 * Startet die GUI
@@ -140,14 +142,11 @@ public class GUI extends JFrame {
 		lblYmax.setBounds(515+width, 307, 61, 16);
 		frame.getContentPane().add(lblYmax);
 		
-		// JButton zoomin = new JButton("+");
 		zoomin.setBounds(585, 423, 44, 22);
 		frame.getContentPane().add(zoomin);
 		
-		// JButton zoomout = new JButton("-");
 		zoomout.setBounds(648, 423, 44, 22);
 		frame.getContentPane().add(zoomout);
-		
 	
 		
 	}
@@ -175,6 +174,7 @@ public class GUI extends JFrame {
 	{
 		return TextFFkt.getText();
 	}
+	
 	
 	public void addZeichenListener(ActionListener zeichnenlistener)
 	{
@@ -221,4 +221,5 @@ public class GUI extends JFrame {
 	{
 		return yminT;
 	}
+	
 }

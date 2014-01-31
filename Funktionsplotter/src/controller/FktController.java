@@ -55,9 +55,10 @@ class ZeichenListener implements ActionListener {
 			ymin=gui.getYmin();
 			xmax=gui.getXmax();
 			xmin=gui.getXmin();
+			
 		}
 		catch(NumberFormatException e){
-			gui.displayErrorMessage("Zahl eingeben für XMin, Xmax, Ymin, Ymax!");
+			gui.displayErrorMessage("Ganzzahl eingeben für XMin, Xmax, Ymin, Ymax und Stützpunkte!");
 			return;
 		}
 
@@ -100,11 +101,8 @@ class ZoomInListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		double ymax,ymin,xmin,xmax;
-		ymax=0;
-		xmax=0;
-		ymin=0;
-		xmin=0;
-		
+		int stuetzpunktzahl=0;
+		xmax=0;xmin=0;ymax=0;ymin=0;
 		try{
 			ymax=gui.getYmax();
 			ymin=gui.getYmin();

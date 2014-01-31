@@ -363,14 +363,14 @@ public class FktBerechnungen {
 			infixNachUpn();
 			int stuetzpunkte = 0;
 			double differenz =(xmax-xmin);
-			stuetzpunkte = (int)(differenz/0.1);
-			
+			double abstand=0.001;
+			stuetzpunkte = (int)(differenz/abstand);
 			double[][] ergebnis= new double[stuetzpunkte][2];
 			
 			for(int i=0;i<stuetzpunkte;i++)
 			{
-				ergebnis[i][0]=xmin+(i*0.1);
-				List<Token> x= ersetzeX((xmin+i*0.1),upnListe);
+				ergebnis[i][0]=xmin+(i*abstand);
+				List<Token> x= ersetzeX((xmin+i*abstand),upnListe);
 				ergebnis[i][1]=upnNachDouble(x);
 			}
 			

@@ -1,8 +1,13 @@
 package View;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Zeichenfläche für die Funktion.
@@ -27,6 +32,8 @@ public class FktFlaeche extends JPanel {
 	public void paintComponent(Graphics g)
 	{ 
 		vorbereitung(g);
+		
+		
 		if(punkte!=null)
 		{
 		
@@ -50,7 +57,7 @@ public class FktFlaeche extends JPanel {
 		double ydifferenz=Math.abs(ymax)+Math.abs(ymin);
 		
 		int[] xPixel=new int[xPoints.length];
-		int[] yPixel=new int[yPoints.length];
+		Integer[] yPixel=new Integer[yPoints.length];
 		
 		for(int j=0; j<xPixel.length;j++)
 		{
@@ -58,16 +65,32 @@ public class FktFlaeche extends JPanel {
 			xPixel[j]= (int) (((super.getWidth()-20)*xPoints[j])/xdifferenz);
 		}
 		
+		
 		for(int j=0; j<yPixel.length;j++)
 		{
+			if(!Double.isNaN(yPoints[j])&&!Double.isInfinite(yPoints[j]))
 			yPixel[j]=(int) (((super.getHeight()-20)*yPoints[j])/ydifferenz);
+			else
+			{
+				yPixel[j]=null;
+			}
 		}
 		for (int j=0;j<yPixel.length; j++)
 		{
+			if(yPixel[j]!=null)
 			yPixel[j]=-yPixel[j];
 		}
 		
-		g.drawPolyline(xPixel, yPixel, xPixel.length);
+
+		
+		for(int z=0;z<punkte.length-1;z++)
+		{
+
+			if(yPixel[z]!=null && yPixel[z+1]!=null)
+			g.drawLine(xPixel[z],yPixel[z],xPixel[z+1],yPixel[z+1]);
+		}
+		
+	//	g.drawPolyline(xPixel, yPixel, xPixel.length);
 		}
 		
 	}
