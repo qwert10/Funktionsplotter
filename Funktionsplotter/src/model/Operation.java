@@ -38,7 +38,6 @@ public enum Operation implements Token {
             return Math.pow(a, b);
         }
     };
-    ;
     
     
     

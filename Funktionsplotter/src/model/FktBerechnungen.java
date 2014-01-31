@@ -23,10 +23,9 @@ public class FktBerechnungen {
 	 */
 	public void tokenize() throws TokenizeException
 	{	
-		// Maps die alle Operationen,Konstanten enthalten
+		// Maps die alle Operationen,Konstanten, Funktionen enthalten
 		 rechenoperationen = new HashMap<String, Operation>();
 	     konstanten = new HashMap<String, ZahlToken>();
-	     
 	     maps = new ArrayList<Map<String, ? extends Token>>();
 	     
 	     // Operationsliste fuellen
@@ -38,6 +37,8 @@ public class FktBerechnungen {
 	     // Einfuegen von Konstanten
 	     konstanten.put("PI", new ZahlToken(Math.PI));
 	     konstanten.put("E", new ZahlToken(Math.E));
+	     konstanten.put("pi", new ZahlToken(Math.PI));
+	     konstanten.put("e", new ZahlToken(Math.E));
 	     
 	     // Liste der Maps fuellen
 	     maps.add(rechenoperationen);

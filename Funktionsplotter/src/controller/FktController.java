@@ -22,12 +22,12 @@ public class FktController {
 	{
 		berechnung=f;
 		gui=g;
-		
-
+		this.gui.addZureckSetzenListener(new ZuSetzListener());
 		this.gui.addLoeschenListener(new LoeschenListener());
 		this.gui.addZeichenListener(new ZeichenListener());
 		this.gui.addZoomInListener(new ZoomInListener());
 		this.gui.addZoomOutListener(new ZoomOutListener());
+		
 	}
 
 	/**
@@ -113,10 +113,10 @@ class ZoomInListener implements ActionListener {
 			gui.displayErrorMessage("Zahl eingeben für XMin, Xmax, Ymin, Ymax!");
 			
 		}
-		ymax=(Math.round((ymax*1.6)*100))/100.0;
-		ymin=(Math.round((ymin*1.6)*100))/100.0;
-		xmin=(Math.round((xmin*1.6)*100))/100.0;
-		xmax=(Math.round((xmax*1.6)*100))/100.0;
+		ymax=(Math.round((ymax*0.5)*100))/100.0;
+		ymin=(Math.round((ymin*0.5)*100))/100.0;
+		xmin=(Math.round((xmin*0.5)*100))/100.0;
+		xmax=(Math.round((xmax*0.5)*100))/100.0;
 		
 		
 		gui.getXmaxButton().setText(""+xmax);
@@ -160,10 +160,10 @@ class ZoomOutListener implements ActionListener {
 			gui.displayErrorMessage("Zahl eingeben für XMin, Xmax, Ymin, Ymax!");
 			return;
 		}
-		ymax=(Math.round((ymax*0.625)*100))/100.0;
-		ymin=(Math.round((ymin*0.625)*100))/100.0;
-		xmin=(Math.round((xmin*0.625)*100))/100.0;
-		xmax=(Math.round((xmax*0.625)*100))/100.0;
+		ymax=(Math.round((ymax*2)*100))/100.0;
+		ymin=(Math.round((ymin*2)*100))/100.0;
+		xmin=(Math.round((xmin*2)*100))/100.0;
+		xmax=(Math.round((xmax*2)*100))/100.0;
 		
 		gui.getXmaxButton().setText(""+xmax);
 		gui.getXminButton().setText(""+xmin);
@@ -185,6 +185,40 @@ class ZoomOutListener implements ActionListener {
 	
 		
 	}
+/**
+ * Listener für Zurücksetzen Button. Setzt auf xmin: -5 xmax: 5 ymin: -6 und ymax: 5 zurück.
+ *
+ */
+class ZuSetzListener implements ActionListener {
+	
+	@Override
+	public void actionPerformed(ActionEvent ev) {
+		double xmax=5;
+		double xmin=-5;
+		double ymax= 5;
+		double ymin= -5;
+		
+		gui.getXmaxButton().setText(""+xmax);
+		gui.getXminButton().setText(""+xmin);
+		gui.getYmaxButton().setText(""+ymax);
+		gui.getYminButton().setText(""+ymin);
+		
+		gui.getZeichenflaeche().setMinMax(ymax, ymin, xmax, xmin);
+		double[][] pkt =null;
+		try {
+			pkt = berechnung.berechneFunktion(gui.getFunction(), xmin, xmax);
+		} catch (Exception ex) {
+			
+			gui.displayErrorMessage(ex.getMessage());
+		}
+		gui.getZeichenflaeche().setPunkte(pkt);
+		gui.getZeichenflaeche().repaint();
+	}
+	
+	
+	
+	
+}
 	
 }
 

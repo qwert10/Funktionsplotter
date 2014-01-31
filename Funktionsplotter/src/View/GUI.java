@@ -35,6 +35,7 @@ public class GUI extends JFrame {
 	private JButton Loeschen;
 	private JButton zoomin = new JButton("+");
 	private JButton zoomout = new JButton("-");
+	private JButton zurueckSetzen = new JButton("Zurücksetzen");
 	private JTextField textField;
 	private JTextField stuetzpunkte;
 
@@ -82,7 +83,7 @@ public class GUI extends JFrame {
 		
 		JLabel FktGleichung = new JLabel("Funktionsgleichung");
 		FktGleichung.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		FktGleichung.setBounds(565+width, 55, 134, 22);
+		FktGleichung.setBounds(575, 58, 134, 22);
 		frame.getContentPane().add(FktGleichung);
 		
 		JLabel y = new JLabel("y=");
@@ -91,7 +92,7 @@ public class GUI extends JFrame {
 		
 		JLabel lblKoordinatensystem = new JLabel("Koordinatensystem");
 		lblKoordinatensystem.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		lblKoordinatensystem.setBounds(565+width, 138, 123, 28);
+		lblKoordinatensystem.setBounds(575, 115, 144, 28);
 		frame.getContentPane().add(lblKoordinatensystem);
 		
 		xminT = new JTextField();
@@ -142,11 +143,15 @@ public class GUI extends JFrame {
 		lblYmax.setBounds(515+width, 307, 61, 16);
 		frame.getContentPane().add(lblYmax);
 		
-		zoomin.setBounds(585, 423, 44, 22);
+		zoomin.setBounds(585, 144, 44, 22);
 		frame.getContentPane().add(zoomin);
 		
-		zoomout.setBounds(648, 423, 44, 22);
+		zoomout.setBounds(648, 144, 44, 22);
 		frame.getContentPane().add(zoomout);
+		
+		
+		zurueckSetzen.setBounds(580, 421, 117, 29);
+		frame.getContentPane().add(zurueckSetzen);
 	
 		
 	}
@@ -196,6 +201,11 @@ public class GUI extends JFrame {
 		zoomout.addActionListener(zoomoutlistener);
 	}
 	
+	public void addZureckSetzenListener(ActionListener zurueckListener)
+	{
+		zurueckSetzen.addActionListener(zurueckListener);
+	}
+	
 	public void displayErrorMessage(String errorMessage)
 	{	       	
         JOptionPane.showMessageDialog(this, errorMessage);      
@@ -221,5 +231,4 @@ public class GUI extends JFrame {
 	{
 		return yminT;
 	}
-	
 }
