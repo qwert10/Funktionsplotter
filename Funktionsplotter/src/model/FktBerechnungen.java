@@ -26,6 +26,7 @@ public class FktBerechnungen {
 		// Maps die alle Operationen,Konstanten enthalten
 		 rechenoperationen = new HashMap<String, Operation>();
 	     konstanten = new HashMap<String, ZahlToken>();
+	     
 	     maps = new ArrayList<Map<String, ? extends Token>>();
 	     
 	     // Operationsliste fuellen

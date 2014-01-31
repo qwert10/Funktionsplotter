@@ -1,16 +1,11 @@
 package View;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
- * Zeichenfläche für die Funktion.
+ * Zeichenfläche für die Funktion. Erweitert JPanel.
  * @author smodlich
  * double[][] punkte: Array mit den X und Y Werten
  * double ymax Maximum der Y Werte
@@ -27,7 +22,9 @@ public class FktFlaeche extends JPanel {
 	private double[][] punkte;
 
 	/**
-	 * Paint Component Methode der Oberklasse wird überschrieben um Funktion zu Zeichnen ruft vorbereitungs Methode auf.s
+	 * Paint Component Methode der Oberklasse wird überschrieben um Funktion zu Zeichnen ruft vorbereitungs Methode auf.Diese zeichnet
+	 * die X und Y Achse und die Einteilungen. paintComponent zeichnet anschließend die Funktion. Bearbeitet auch infinity und NaN Werte
+	 * diese werden beim Zeichnen ignoriert.
 	 */
 	public void paintComponent(Graphics g)
 	{ 
@@ -90,7 +87,6 @@ public class FktFlaeche extends JPanel {
 			g.drawLine(xPixel[z],yPixel[z],xPixel[z+1],yPixel[z+1]);
 		}
 		
-	//	g.drawPolyline(xPixel, yPixel, xPixel.length);
 		}
 		
 	}
