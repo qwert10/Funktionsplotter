@@ -10,12 +10,31 @@ import java.util.concurrent.ArrayBlockingQueue;
  *
  */
 public class FktBerechnungen {
+	/**
+	 * Rechenoperation Map enthält alle Rechenoperationen
+	 *
+	 */
 	private Map<String,Operation> rechenoperationen;
+	/**
+	 * Konstanten Map enthält die Konstanten e und pi.
+	 */
 	private Map<String, ZahlToken> konstanten;
+	/**
+	 * Map über alle Maps enthält Operatoren und Konstanten und Klammern
+	 */
 	private List<Map<String, ? extends Token>> maps;
-	private String funktion;
+	/**
+	 * Liste der erkannten Token in Infix Notation
+	 */
 	private List<Token> tokenliste;
+	/**
+	 * Liste der erkannten Token nach Umwandlung in UPN Notation.
+	 */
 	private List<Token> upnListe;	
+	/**
+	 * Funktionsstring
+	 */
+	private String funktion;
 	
 	/**
 	 * Zersetzt den Eingabestring, Varible funktion dieser Klasse, zu einer Liste von Tokens
@@ -52,7 +71,7 @@ public class FktBerechnungen {
 		
 		
 		//Schleife �ber alle Zeichen des Eingabestrings
-		außen:
+		aussen:
 		while(aktuellePos<funktion.length())
 		{
 			// aktueller Buchstabe
@@ -93,7 +112,7 @@ public class FktBerechnungen {
 					if (tokenLaenge!=0)
 					{
 						aktuellePos=aktuellePos+tokenLaenge;
-						continue außen;
+						continue aussen;
 					}
 					
 					
@@ -160,7 +179,7 @@ public class FktBerechnungen {
 	 * @param aktuellePos die aktuelle Position in der ein Token gefunden werden soll
 	 * @param funktion der String der verarbeitet wird
 	 * @param liste die Tokenliste zu der das gefundene Token hinzugefügt wird
-	 * @return
+	 * @return gibt Index des Endes des gewählen Tokens zurück
 	 */
 	public int erkenneToken(Map<String, ? extends Token> m,int aktuellePos, String funktion, List<Token> liste)
 	{
@@ -332,7 +351,7 @@ public class FktBerechnungen {
 	}
 
 	/**
-	 * Berrechnet zwischen xmin und xmax mit 50 Stützpunkten die Funktionswerte.
+	 * Berrechnet zwischen xmin und xmax mit 1000 Stützpunkten die Funktionswerte.
 	 * Funktion die die Funktionen dieser Klasse in der richtigen Reihenfolge zusammenfasst, so dass kein Vorwissen nötig ist um die
 	 * Funktionen für einen Funktionsplotter zu benutzen.
 	 * @param Funktion der Funktionsstring

@@ -12,12 +12,23 @@ import model.FktBerechnungen;
  * Controller für den Funktionsplotter. Verarbeitet Eingaben der Buttons und leitet die entsprechenden Reaktionen ein.
  * Anschließend werden die Ergebnisse in der GUI angezeigt.
  * @author smodlich
- * Konstruktor der die Berechnungsvariable und die GUI setzt
+ * 
  */
 public class FktController {
+	/**
+	 * Funktionsberechnungklasse
+	 */
 	private FktBerechnungen berechnung;
+	/**
+	 * GUI Klasse
+	 */
 	private GUI gui;
 	
+	/**
+	 * Konstruktor der die Berechnungsvariable und die GUI setzt
+	 * @param f Funktionsberechnungsklasse
+	 * @param g GUI Objekt
+	 */
 	public FktController(FktBerechnungen f, GUI g)
 	{
 		berechnung=f;

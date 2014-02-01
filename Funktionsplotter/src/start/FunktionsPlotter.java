@@ -1,3 +1,4 @@
+package start;
 import controller.FktController;
 import View.GUI;
 import model.FktBerechnungen;

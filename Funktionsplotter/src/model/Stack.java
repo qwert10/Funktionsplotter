@@ -5,6 +5,9 @@ package model;
  *
  */
 public class Stack {
+	/**
+	 * Dieser Stapel.
+	 */
 	
 	private Object[] Stapel;
 	
@@ -49,7 +52,7 @@ public class Stack {
 	
 	/**
 	 * gibt das oberste Object des Stapels zurück und entfernt es aus dem Stapel.
-	 * @return
+	 * @return das oberste Object
 	 */
 	public Object pop(){
 		if (Stapel.length==1)

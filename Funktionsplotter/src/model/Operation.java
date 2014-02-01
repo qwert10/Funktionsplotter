@@ -8,30 +8,45 @@ package model;
  *
  */
 public enum Operation implements Token {
-
+	
+/**
+ * Addition
+ */
 	PLUS("+", 1,1) {
         public double berechne(double a, double b) {
             return a+b;
         }
     },
+    /**
+     * Subtraktion
+     */
 
     MINUS("-", 1,1) {
         public double berechne(double a,double b) {
             return a-b;
         }
     },
+    /**
+     * Multiplikation
+     */
 
     MAL("*", 2,1) {
         public double berechne(double a,double b) {
             return a*b;
         }
     },
+    /**
+     * Division
+     */
 
     DURCH("/", 2,1) {
         public double berechne(double a, double b) {
             return a/b;
         }
     },
+    /**
+     * Potenzierung
+     */
     
     HOCH("^", 3,2) {
         public double berechne(double a, double b) {
@@ -40,13 +55,33 @@ public enum Operation implements Token {
     };
     
     
-    
+    /**
+     * Abstrakte Berechnungsmethode. Muss von jedem Enum individuell überschrieben werden mit der konkreten Berechnungsmethode.
+     * @param a 1. Zahl
+     * @param b 2. Zahl
+     * @return Berechnungswert
+     */
     public abstract double berechne(double a ,double b);
     
+    /**
+     * Priorität der Operation
+     */
     private final int prioritaet;
+    /**
+     * Zeichen der Operation
+     */
     private final String name;
+    /**
+     * Assoziativität der Operation 1=linksassoziativ 2=rechtsassoziativ 
+     */
     private final int asso;
 
+    /**
+     * Konstruktor für die Operationen
+     * @param name Zeichen
+     * @param prio Priorität
+     * @param az Assoziativität
+     */
     Operation(String name, int prio,int az) {
         this.prioritaet = prio;
         this.name = name;

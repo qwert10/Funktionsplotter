@@ -7,8 +7,16 @@ import java.awt.event.*;
  * inputString ist der Eingabe String für den die Klammernprüfung durchgeführt werden soll
  */
 public class ParenMatcher{
+	/**
+	 * String der überprüft werden soll.
+	 */
   private String inputString;
-  	
+  	/**
+  	 * Gibt zurück ob eine zugehörige Klammer gefunden wurde. Eckige Klammern, geschweifte und runde.
+  	 * @param c erste Klammer
+  	 * @param d zweite Klammer
+  	 * @return true falls beide Klammern gleich, ansonsten false
+  	 */
   private boolean match(char c, char d){
     switch(c){
       case '(': return(d==')');
@@ -19,7 +27,7 @@ public class ParenMatcher{
   }
   	/**
   	 * führt die Klammernprüfung im inputString durch
-  	 * @return
+  	 * @return true bedeutet Klammern stimmen, false bedeutet Klammern sind falsch.
   	 */
   public boolean parenMatch(){
     

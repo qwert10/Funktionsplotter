@@ -6,14 +6,29 @@ package model;
  *
  */
 public enum Klammern implements Token {
-	OFF("("),SCHLIES(")");
+	/**
+	 * öffnende Klammer
+	 */
+	OFF("("),
+	/**
+	 * schließende Klammer
+	 */
+	SCHLIES(")");
 	
 	public final String zeichen;
 	
-	private Klammern(String z)
+	/**
+	 * interner Konstruktor für Klammern enum Objekt
+	 * @param z Klammer
+	 */
+	Klammern(String z)
 	{
 		zeichen=z;
 	}
+	/**
+	 * Gibt Klammerwert zurück
+	 * @return Klammer
+	 */
 	public String getZeichen()
 	{
 		return zeichen;
